@@ -1,27 +1,31 @@
+// Import du package dotenv sécurisant les informations sensibles liées à la BDD (protéger les informations de connexion vers la base de données) :
 // Import d'express afin de créer des applis web avec Node.
 // Import de body-parser afin de pouvoir "parser" le body de la requête.
-// Import de Cors
 // Import mongoose afin de faciliter les interactions avec la base de données de mongoDB.
 // Import de path afin de pouvoir travailler avec les chemins des fichiers(module node qui sert à cacher notre addresse Mongo, marche avec dotenv).
-// Import de dotenv afin de protéger les informations de connexion vers la base de données.
-// Appel au module Express avec sa fonction.
 
+require('dotenv').config();
 const express = require('express'); 
+const helmet = require('helmet'); 
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const apiLimiter = require('./middleware/limits-rate'); 
 const mongoose = require('mongoose'); 
 const path = require('path');
-require('dotenv').config();
+
+const userRoutes = require('./routes/userRoutes');        
+const postRoutes = require('./routes/postRoutes');   
+
+// Création de l'application Express, sécurisée par le package Helmet via la définition d'en-têtes HTTP diverses :
 
 const app = express();
-app.use(cors());
+app.use(helmet());
 
 
 
 
 // Connection à la base de données (MongoDB Atlas Database) :
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`, 
+mongoose.connect(`mongodb+srv://scoreur9:f63l5T0MGJk4MxIE@cluster0.dim7amb.mongodb.net/?retryWrites=true&w=majority`, 
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
@@ -29,8 +33,8 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
 
 
 // Avant la route d'API, on ajoute la fonction (middleware) des headers permettant aux deux ports, front et end, de communiquer entre eux.
-// "*" permet d'accéder a l'API depuis n'importe quelle origine.
-// Et, autorisation d'utiliser certains headers sur l'objet requête.
+// Ajout des headers permettant le Cross Origin Resource Sharing (CORS) :
+// Accès autorisé pour tous, Accès autorisé sous certains en-têtes, Accès autorisé sous certaines méthodes.
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,9 +46,16 @@ app.use((req, res, next) => {
 
 // On récupère le body en front sur l'objet request et on "parse" le corps de la requête en objet json :
 
-app.use("/api/auth",limiter ); 
 app.use(bodyParser.json());
 
+// Définition des différentes routes : utilisateur, publications, likes,commentaires.
+// Route images.
+
+app.use('/api/users', apiLimiter, userRoutes);  
+app.use('/api/posts', postRoutes);              
+app.use('/api/likes', likeRoutes);            
+app.use('/api/comments', commentRoutes);        
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 // Exportation du module afin de pouvoir le réutiliser :

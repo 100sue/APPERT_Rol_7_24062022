@@ -1,20 +1,45 @@
-import {createRouter, createWebHistory} from "vue-router"
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+import Wall from'../views/Wall.vue'
+import Profil from '../views/Profil.vue'
+import Community from '../views/Community.vue'
+import ModifyPost from '../views/ModifyPost.vue'
 
-import WallPage from "../pages/wall/WallPage.vue"
-import Login from "../pages/Login.vue"
-import ProfilePage from "../pages/ProfilePage.vue"
-import EditProfile from "../pages/EditProfile.vue"
-import SignUp from "../pages/SignUp.vue"
+
 
 const routes = [
-    {path: "/login", component: Login},
-    {path: "/signup", component: SignUp},
-    {path: "/home", component: WallPage},
-    {path: "/profile", component: ProfilePage},
-    {path: "/EditProfile", component: EditProfile}
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/wall',
+    name: 'Wall',
+    component: Wall
+  },
+  {
+    path: '/profil',
+    name: 'Profil',
+    component: Profil
+  },
+  {
+    path: '/community',
+    name: 'Community',
+    component: Community
+  },
+  {
+    path: '/modifyPost/:id',
+    name: 'ModifyPost',
+    component: ModifyPost
+  }
 ]
 
 
-const router = createRouter({history: createWebHistory(), routes})
+const router = new createRouter({
+  history: createWebHistory(),
+  routes
+})
+
 
 export default router
