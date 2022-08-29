@@ -6,7 +6,7 @@
 
  Réseau Social Groupomania : projet frontend et backend.
  
- Projet M.E.V.N (Mango, Express, Vue, Node)
+ Projet M.E.V.N (Mongo, Express, Vue, Node)
  
  <p align="center">
 <img src= "https://user-images.githubusercontent.com/90606431/186601599-2fae53bf-75b9-40f6-97f8-2b231a8b0202.jpg"/>
@@ -50,7 +50,7 @@ Voici, les exigences du comité de direction :
 - l’accès à un forum où les salariés publient des contenus multimédias doit être présent. 
 - L’accès à un forum où les salariés publient des textes doit être présent ; les utilisateurs doivent pouvoir facilement repérer les dernières participations des employés ;
 - le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre le ou la chargé-e de communication Groupomania doit pouvoir afficher les dernières participations des employés salariés.
-- La base de données doit se manipuler avec le language SQL.
+- La base de données est avec Mango Db.
 - Les données de connexion doivent être sécurisées.
 - Le projet doit être inclusif en respectant les standards du WACG.
 
