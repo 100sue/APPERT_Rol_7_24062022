@@ -16,6 +16,7 @@ const normalizePort = val => {
   return false;
 };
 
+
 // Define the server to listen on the port 5173 and the errorHandler to handle the errors :
 
 const port = normalizePort(process.env.PORT || '5173'); 

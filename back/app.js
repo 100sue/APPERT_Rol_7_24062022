@@ -1,27 +1,28 @@
-// Import du package dotenv sécurisant les informations sensibles liées à la BDD (protéger les informations de connexion vers la base de données) :
 // Import d'express afin de créer des applis web avec Node.
+
 // Import de body-parser afin de pouvoir "parser" le body de la requête.
 // Import mongoose afin de faciliter les interactions avec la base de données de mongoDB.
 // Import de path afin de pouvoir travailler avec les chemins des fichiers(module node qui sert à cacher notre addresse Mongo, marche avec dotenv).
+// Import de dotenv afin de protéger les informations de connexion vers la base de données.
+// Appel au module Express avec sa fonction.
 
-require('dotenv').config();
 const express = require('express'); 
 const helmet = require('helmet'); 
 const bodyParser = require('body-parser');
 const apiLimiter = require('./middleware/limits-rate'); 
 const mongoose = require('mongoose'); 
 const path = require('path');
+require('dotenv').config();
 
-const userRoutes = require('./routes/userRoutes');        
-const postRoutes = require('./routes/postRoutes');   
 
 // Création de l'application Express, sécurisée par le package Helmet via la définition d'en-têtes HTTP diverses :
 
 const app = express();
-app.use(helmet());
 
+// Routes vers l'utilisateur et les posts :
 
-
+const userRoutes = require('./routes/userRoutes');        
+const postRoutes = require('./routes/postRoutes');   
 
 // Connection à la base de données (MongoDB Atlas Database) :
 
@@ -48,7 +49,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// Définition des différentes routes : utilisateur, publications, likes,commentaires.
+// Définition des différentes routes : utilisateur, publications, likes, commentaires.
 // Route images.
 
 app.use('/api/users', apiLimiter, userRoutes);  
@@ -56,6 +57,8 @@ app.use('/api/posts', postRoutes);
 app.use('/api/likes', likeRoutes);            
 app.use('/api/comments', commentRoutes);        
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use(helmet());
 
 
 // Exportation du module afin de pouvoir le réutiliser :
