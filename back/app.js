@@ -18,11 +18,14 @@ require('dotenv').config();
 // Création de l'application Express, sécurisée par le package Helmet via la définition d'en-têtes HTTP diverses :
 
 const app = express();
+app.use(helmet());
+
 
 // Routes vers l'utilisateur et les posts :
 
 const userRoutes = require('./routes/userRoutes');        
-const postRoutes = require('./routes/postRoutes');   
+//const postRoutes = require('./routes/postRoutes');   
+
 
 // Connection à la base de données (MongoDB Atlas Database) :
 
@@ -30,8 +33,6 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
-
-
 
 // Avant la route d'API, on ajoute la fonction (middleware) des headers permettant aux deux ports, front et end, de communiquer entre eux.
 // Ajout des headers permettant le Cross Origin Resource Sharing (CORS) :
@@ -44,21 +45,19 @@ app.use((req, res, next) => {
    next();
 });
 
-
 // On récupère le body en front sur l'objet request et on "parse" le corps de la requête en objet json :
 
 app.use(bodyParser.json());
+
 
 // Définition des différentes routes : utilisateur, publications, likes, commentaires.
 // Route images.
 
 app.use('/api/users', apiLimiter, userRoutes);  
-app.use('/api/posts', postRoutes);              
-app.use('/api/likes', likeRoutes);            
-app.use('/api/comments', commentRoutes);        
+//app.use('/api/posts', postRoutes);              
+//app.use('/api/likes', likeRoutes);            
+//app.use('/api/comments', commentRoutes);        
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
-app.use(helmet());
 
 
 // Exportation du module afin de pouvoir le réutiliser :
