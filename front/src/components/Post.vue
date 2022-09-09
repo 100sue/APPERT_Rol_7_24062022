@@ -5,7 +5,7 @@
         <a href="/profil" class="post-header-pic">
           <img
             v-if="post.image"
-            :src="`http://localhost:3000/${post.image}`"
+            :src="`http://localhost:5173/${post.image}`"
             width="50"
             title="Avatar de l'auteur"
             class="post-header-pic-round"
@@ -59,7 +59,7 @@
         </div>
         <div class="post-img">
           <img
-            :src="`http://localhost:3000/${post.media}`"
+            :src="`http://localhost:5173/${post.media}`"
             title="Image du post"
             class="wall-img"
             v-if="post.media"
@@ -106,7 +106,7 @@
         >
           <img
             v-if="commentaire.image"
-            :src="`http://localhost:3000/${commentaire.image}`"
+            :src="`http://localhost:5173/${commentaire.image}`"
             width="40"
             class="comment-pic-round"
           />
