@@ -75,7 +75,7 @@
         // Envoi du formulaire via la méthode post d'axios
         axios({
           method: "post",
-          url: "http://localhost:5173/api/users/signup",
+          url: "http://localhost:27107/api/users/signup",
           data: this.signUpForm,
           headers: { "Content-Type": "application/json" },
         })
@@ -86,7 +86,7 @@
               "Inscription réussie ! Veuillez vous connecter pour accéder à votre compte !"
             );
             localStorage.clear();
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: "Home" });
           })
           .catch((err) => {
             alert(err.response.data.message);

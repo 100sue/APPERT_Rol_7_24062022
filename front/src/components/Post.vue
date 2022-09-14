@@ -5,7 +5,7 @@
         <a href="/profil" class="post-header-pic">
           <img
             v-if="post.image"
-            :src="`http://localhost:5173/${post.image}`"
+            :src="`http://localhost:27107/${post.image}`"
             width="50"
             title="Avatar de l'auteur"
             class="post-header-pic-round"
@@ -59,16 +59,16 @@
         </div>
         <div class="post-img">
           <img
-            :src="`http://localhost:5173/${post.media}`"
+            :src="`http://localhost:27107${post.media}`"
             title="Image du post"
             class="wall-img"
             v-if="post.media"
           />
           <img
-            :src="post.link"
+            :src="post.contenu"
             title="Image du post"
             class="wall-img"
-            v-if="post.link && !post.media"
+            v-if="post.contenu && !post.media"
           />
         </div>
         <div class="post-likes">
@@ -106,7 +106,7 @@
         >
           <img
             v-if="commentaire.image"
-            :src="`http://localhost:5173/${commentaire.image}`"
+            :src="`http://localhost:27107/${commentaire.image}`"
             width="40"
             class="comment-pic-round"
           />
@@ -188,6 +188,10 @@
         reveleComment: false,
       };
     },
+    mounted() {
+    console.log("in post vue component")
+    console.log(this.post);
+   }, 
     methods: {
       // Fonction fermant automatiquement la partie option de post, dès lors que l'utilisateur click au delà des boutons modifier et supprimer
       ClickOutside() {

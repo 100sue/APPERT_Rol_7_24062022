@@ -14,7 +14,7 @@
             >
               <img
                 v-if="post.image"
-                :src="`http://localhost:5173/${post.image}`"
+                :src="`http://localhost:27107/${post.image}`"
                 width="50"
                 alt="Avatar"
                 class="post-header-pic-round"
@@ -52,7 +52,7 @@
               />
               <div class="post-media">
                 <img
-                  :src="`http://localhost:5173/${post.media}`"
+                  :src="`http://localhost:27107/${post.media}`"
                   alt="Image post"
                   class="wall-img"
                   v-if="post.media != 'null'"
@@ -137,7 +137,7 @@
       getOnePost() {
         const postId = this.$route.params.id;
         axios
-          .get(`http://localhost:5173/api/posts/${postId}`, {
+          .get(`http://localhost:27107/api/posts/${postId}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${this.token}`,
@@ -160,7 +160,7 @@
         formData.append("link", this.post.link);
         axios({
           method: "put",
-          url: `http://localhost:5173/api/posts/${postId}`,
+          url: `http://localhost:27107/api/posts/${postId}`,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",

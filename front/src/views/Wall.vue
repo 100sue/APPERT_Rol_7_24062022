@@ -9,7 +9,7 @@
         <Post
           v-for="post in posts"
           :key="post.id"
-          :post="{post}"
+          :post="post"
           :deletePost="deletePost"
           :addLike="addLike"
           :addComment="addComment"
@@ -46,7 +46,7 @@
     },
     created() {
       this.token = localStorage.getItem("token");
-      fetch("http://localhost:5173/api/posts", {
+      fetch("http://localhost:27107/api/posts", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
@@ -73,18 +73,22 @@
       },
       // Création d'une nouvelle publication
       createPost(formData) {
+        console.log(formData)
         axios({
           method: "post",
-          url: "http://localhost:5173/api/posts",
+          url: "http://localhost:27107/api/posts",
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.token}`,
           },
         }).then((response) => {
+          alert("Publication ajoutée !");
           const post = response.data;
           post["likes"] = 0;
           this.posts = [post].concat(this.posts);
+          console.log("in create post")
+          console.log([post].concat(this.posts))
         }).catch((err) => {
             alert(err);
           });
@@ -92,7 +96,7 @@
       // Suppression d'une publication
       deletePost(postId) {
         axios
-          .delete(`http://localhost:5173/api/posts/${postId}`, {
+          .delete(`http://localhost:27107/api/posts/${postId}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${this.token}`,
@@ -108,7 +112,7 @@
       addLike(postId) {
         axios({
           method: "post",
-          url: "http://localhost:5173/api/likes",
+          url: "http://localhost:27107/api/likes",
           data: { postId },
           headers: {
             "Content-Type": "application/json",
@@ -131,7 +135,7 @@
       addComment(postId, message) {
         axios({
           method: "post",
-          url: "http://localhost:5173/api/comments",
+          url: "http://localhost:27107/api/comments",
           data: { postId, message },
           headers: {
             "Content-Type": "application/json",
@@ -145,12 +149,13 @@
       loadComments(postId) {
         axios({
           method: "get",
-          url: `http://localhost:5173/api/comments/${postId}`,
+          url: `http://localhost:27107/api/comments/${postId}`,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${this.token}`,
           },
         }).then((response) => {
+          console.log("load comments of ",response.data)
           this.comments = {
             ...this.comments,
             [postId]: response.data,
@@ -160,7 +165,7 @@
       // Suppression de commentaire
       deleteComment(postId, commentId) {
         axios
-          .delete(`http://localhost:5173/api/comments/${commentId}`, {
+          .delete(`http://localhost:27107/api/comments/${commentId}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${this.token}`,

@@ -54,7 +54,7 @@
                 v-if="user.image"
                 class="member-pic-img"
                 alt="Avatar"
-                :src="`http://localhost:5173/${user.image}`"
+                :src="`http://localhost:27107/${user.image}`"
               />
               <i v-else id="member-pic-default" class="fas fa-user-circle"></i>
             </div>
@@ -95,7 +95,7 @@
     // Récupération de la liste de membres inscrits.
     created() {
       this.token = localStorage.getItem("token");
-      fetch("http://localhost:5173/api/users", {
+      fetch("http://localhost:27107/api/users", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,

@@ -64,7 +64,6 @@
         formData.append("message", message);
         formData.append("image", media);
         formData.append("link", link);
-        alert("Publication ajoutée !");
         this.createPost(formData);
         // Clean des inputs une fois la publication ajoutée
         this.postForm = {
